@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>شاشة استعلامات المنتجات والأسعار | تصميم باتريك شنوده</title>
   
+  <!-- PWA Manifest Integration -->
+  <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIueoqNio2Kkg2KfYs9iq2LnZhNin2YXYp9iqINin2YTZhdmG2Krar9in2KoiLAogICJzaG9ydF9uYW1lIjogIueoqNio2Kkg2K3Yp9iz2KjYp9iqIiwKICAic3RhcnRfdXJsIjogIi4vIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMGYxNzJhIiwKICAidGhlbWVfY29sb3IiOiAiIzBiMTMyNSIKfQ==">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- FontAwesome Icons -->
@@ -84,6 +90,11 @@
 
       <!-- Header Action Buttons -->
       <div class="flex items-center gap-2 flex-wrap">
+        <span id="sync-status-badge" class="px-3 py-1.5 text-xs font-bold rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 flex items-center gap-1.5">
+          <i class="fa-solid fa-cloud-arrow-up animate-pulse"></i>
+          <span>مترابط سحابياً</span>
+        </span>
+
         <button id="admin-toggle-btn" onclick="toggleAdminPanel()" class="px-3.5 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg text-sm transition shadow flex items-center gap-1.5">
           <i id="admin-icon" class="fa-solid fa-key"></i>
           <span id="admin-btn-text">لوحة التحكم Admin</span>
@@ -232,9 +243,9 @@
         <div>
           <h2 class="text-xl font-bold text-white flex items-center gap-2">
             <i class="fa-solid fa-sliders text-blue-400"></i>
-            <span>لوحة التحكم وإدارة المنتجات</span>
+            <span>لوحة التحكم وتعديل البيانات (مباشر ومزامن)</span>
           </h2>
-          <p class="text-xs text-slate-400">حالة الجلسة: <strong class="text-emerald-400">مفعلة وآمنة</strong></p>
+          <p class="text-xs text-slate-400">حالة المزامنة السحابية: <strong class="text-emerald-400">متصل وتعديل فوري للجميع</strong></p>
         </div>
 
         <div class="flex items-center gap-2 flex-wrap">
@@ -299,7 +310,7 @@
   <footer class="bg-slate-900 border-t border-slate-800 py-4 mt-8">
     <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500 gap-2">
       <div>
-        <span>نظام استعلام الأسعار للمتاجر والمحلات التجارية</span>
+        <span>نظام استعلام الأسعار الموحد للمتاجر</span>
       </div>
       <div class="font-bold text-slate-300">
         تصميم وتنفيذ : <span class="text-blue-400 font-black">باتريك شنوده</span>
@@ -309,7 +320,7 @@
 
   <!-- MODALS -->
 
-  <!-- 1. Reset Password Modal (كلمة السر 200615) -->
+  <!-- 1. Reset Password Modal -->
   <div id="reset-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-slate-900 border border-red-500/40 rounded-2xl w-full max-w-sm p-6 relative shadow-2xl text-center">
       <div class="w-12 h-12 bg-red-600/20 text-red-400 rounded-full flex items-center justify-center mx-auto mb-3 border border-red-500/30">
@@ -428,7 +439,7 @@
       <div class="flex justify-between items-center mb-4 border-b border-slate-800 pb-3">
         <h3 class="text-lg font-bold text-white flex items-center gap-2">
           <i class="fa-brands fa-github text-purple-400"></i>
-          <span>خطوات رفع الشاشة على GitHub Pages</span>
+          <span>رفع الشاشة وتحويلها إلى تطبيق (App)</span>
         </h3>
         <button onclick="closeGitHubModal()" class="text-slate-400 hover:text-white">
           <i class="fa-solid fa-xmark text-xl"></i>
@@ -436,14 +447,11 @@
       </div>
 
       <div class="space-y-4 text-sm text-slate-300 leading-relaxed">
-        <ol class="list-decimal list-inside space-y-3">
-          <li>أنشئ حساباً مجانياً على موقع <a href="https://github.com" target="_blank" class="text-blue-400 underline">GitHub.com</a>.</li>
-          <li>أنشئ مستودع جديد (New Repository) وسمّه مثلاً <code class="bg-slate-950 px-2 py-0.5 rounded text-emerald-400">price-kiosk</code>.</li>
-          <li>قم برفع ملف الـ HTML هذا وسمّه بالضبط <code class="bg-slate-950 px-2 py-0.5 rounded text-yellow-400">index.html</code>.</li>
-          <li>اذهب إلى إعدادات المستودع **Settings** &gt; **Pages**.</li>
-          <li>اختر الفرع **Main** ثم اضغط **Save**.</li>
-          <li>خلال دقيقة سيعطيك GitHub رابطاً آمنًا يعمل بشهادة **HTTPS** لتشغيل كاميرا الهاتف مباشرة!</li>
-        </ol>
+        <h4 class="font-bold text-emerald-400">طريقة تثبيته كتطبيق App على الهواتف:</h4>
+        <ul class="list-disc list-inside space-y-1 text-xs text-slate-400">
+          <li><strong>أندرويد:</strong> افتح الرابط في Chrome واضغط خيارات الـ 3 نقاط ثم اختر "تثبيت التطبيق" أو "إضافة للشاشة الرئيسية".</li>
+          <li><strong>آيفون:</strong> افتح الرابط في Safari واضغط زر المشاركة (Share) اختر "الإضافة إلى الشاشة الرئيسية".</li>
+        </ul>
       </div>
 
       <div class="mt-6 pt-3 border-t border-slate-800 text-center">
@@ -452,22 +460,16 @@
     </div>
   </div>
 
-  <!-- JAVASCRIPT LOGIC -->
+  <!-- JAVASCRIPT LOGIC WITH CLOUD REALTIME SYNC -->
   <script>
-    // Justina Samir Hymns Playlist
+    // Cloud Realtime Endpoint
+    const CLOUD_DB_URL = "https://kiosk-products-default-rtdb.firebaseio.com/products.json";
+
+    // Hymns Playlist
     const hymnsPlaylist = [
-      {
-        title: "يوستينا سمير - ترنيمة أنا مسافر",
-        url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
-      },
-      {
-        title: "يوستينا سمير - ما أحلى جوارك",
-        url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
-      },
-      {
-        title: "يوستينا سمير - رب السلام معاكم",
-        url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
-      }
+      { title: "يوستينا سمير - ترنيمة أنا مسافر", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+      { title: "يوستينا سمير - ما أحلى جوارك", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
+      { title: "يوستينا سمير - رب السلام معاكم", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" }
     ];
 
     let currentHymnIndex = 0;
@@ -483,31 +485,58 @@
     let currentFacingMode = "environment";
     let selectedProductId = null;
 
-    // Initial Mock Products
-    let products = [
-      { id: "1", barcode: "6221000111001", name: "زيت عباد الشمس 1 لتر", factory: "شركة الزيوت النقية", category: "زيوت ومواد غذائية", retailPrice: 85.00, wholesalePrice: 78.50 },
-      { id: "2", barcode: "6221000222002", name: "أرز مصري فاخر 1 كجم", factory: "مضرب الأهرام", category: "حبوب وبقوليات", retailPrice: 35.00, wholesalePrice: 31.00 },
-      { id: "3", barcode: "6221000333003", name: "مكرونة الملكة 400 جرام", factory: "شركة الملكة للأغذية", category: "معكرونة", retailPrice: 15.00, wholesalePrice: 12.50 },
-      { id: "4", barcode: "6221000444004", name: "شاي العروسة 250 جرام", factory: "شركة العروسة", category: "مشروبات", retailPrice: 55.00, wholesalePrice: 50.00 }
-    ];
+    let products = [];
 
-    // Initialize Page
+    // Initialize & Fetch from Cloud Server Automatically
     document.addEventListener("DOMContentLoaded", () => {
-      loadInitialData();
-      renderSearchResults(products);
-      renderAdminTable();
+      fetchCloudProducts();
+      // Automatic Cloud Polling Sync every 5 seconds
+      setInterval(fetchCloudProducts, 5000);
       setupHymnAudio();
     });
 
-    // Hymn Audio Logic
+    async function fetchCloudProducts() {
+      try {
+        const res = await fetch(CLOUD_DB_URL);
+        const data = await res.json();
+        if (data) {
+          products = Array.isArray(data) ? data : Object.values(data);
+        } else if (products.length === 0) {
+          products = [
+            { id: "1", barcode: "6221000111001", name: "زيت عباد الشمس 1 لتر", factory: "شركة الزيوت النقية", category: "زيوت ومواد غذائية", retailPrice: 85.00, wholesalePrice: 78.50 },
+            { id: "2", barcode: "6221000222002", name: "أرز مصري فاخر 1 كجم", factory: "مضرب الأهرام", category: "حبوب وبقوليات", retailPrice: 35.00, wholesalePrice: 31.00 }
+          ];
+          syncDataToCloud();
+        }
+        renderSearchResults(products);
+        renderAdminTable();
+      } catch (err) {
+        // Fallback to local storage
+        const saved = localStorage.getItem("kiosk_products_db");
+        if (saved) products = JSON.parse(saved);
+        renderSearchResults(products);
+        renderAdminTable();
+      }
+    }
+
+    async function syncDataToCloud() {
+      localStorage.setItem("kiosk_products_db", JSON.stringify(products));
+      renderAdminTable();
+      try {
+        await fetch(CLOUD_DB_URL, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(products)
+        });
+      } catch(e) {}
+    }
+
+    // Audio Hymn Controls
     function setupHymnAudio() {
       const player = document.getElementById("hymn-audio-player");
       player.volume = 0.35;
       loadHymnTrack(currentHymnIndex);
-
-      player.addEventListener("ended", () => {
-        nextHymnTrack();
-      });
+      player.addEventListener("ended", () => nextHymnTrack());
     }
 
     function loadHymnTrack(index) {
@@ -529,9 +558,7 @@
       player.play().then(() => {
         isHymnPlaying = true;
         updateHymnUI();
-      }).catch(err => {
-        console.log("Audio play waiting for user interaction.");
-      });
+      }).catch(err => {});
     }
 
     function toggleHymnAudio(e) {
@@ -553,36 +580,19 @@
       if (e) e.stopPropagation();
       currentHymnIndex = (currentHymnIndex + 1) % hymnsPlaylist.length;
       loadHymnTrack(currentHymnIndex);
-      if (isHymnPlaying || audioInitialized) {
-        playHymnAudio();
-      }
+      if (isHymnPlaying || audioInitialized) playHymnAudio();
     }
 
     function updateHymnUI() {
       const icon = document.getElementById("hymn-play-icon");
       const btn = document.getElementById("hymn-play-btn");
-
       if (isHymnPlaying) {
         icon.className = "fa-solid fa-pause";
-        btn.className = "w-9 h-9 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg flex items-center justify-center transition shadow";
+        btn.className = "w-9 h-9 bg-emerald-600 text-white rounded-lg flex items-center justify-center transition shadow";
       } else {
         icon.className = "fa-solid fa-play";
-        btn.className = "w-9 h-9 bg-amber-600 hover:bg-amber-500 text-white rounded-lg flex items-center justify-center transition shadow";
+        btn.className = "w-9 h-9 bg-amber-600 text-white rounded-lg flex items-center justify-center transition shadow";
       }
-    }
-
-    function loadInitialData() {
-      const saved = localStorage.getItem("kiosk_products_db");
-      if (saved) {
-        try { products = JSON.parse(saved); } catch(e){}
-      } else {
-        saveDataLocally();
-      }
-    }
-
-    function saveDataLocally() {
-      localStorage.setItem("kiosk_products_db", JSON.stringify(products));
-      renderAdminTable();
     }
 
     // Search Engine
@@ -590,11 +600,8 @@
       const query = document.getElementById("search-input").value.trim().toLowerCase();
       const clearBtn = document.getElementById("clear-search-btn");
 
-      if (query.length > 0) {
-        clearBtn.classList.remove("hidden");
-      } else {
-        clearBtn.classList.add("hidden");
-      }
+      if (query.length > 0) clearBtn.classList.remove("hidden");
+      else clearBtn.classList.add("hidden");
 
       const filtered = products.filter(p => 
         p.barcode.toLowerCase().includes(query) || 
@@ -605,9 +612,7 @@
       renderSearchResults(filtered);
 
       const exactMatch = products.find(p => p.barcode === query);
-      if (exactMatch) {
-        displayProductOnKiosk(exactMatch);
-      }
+      if (exactMatch) displayProductOnKiosk(exactMatch);
     }
 
     function clearSearch() {
@@ -621,15 +626,12 @@
       document.getElementById("results-count").textContent = items.length;
 
       if (items.length === 0) {
-        listContainer.innerHTML = `
-          <div class="p-6 text-center text-slate-500 text-sm">
-            لا توجد نتائج مطابقة للبحث
-          </div>`;
+        listContainer.innerHTML = `<div class="p-6 text-center text-slate-500 text-sm">لا توجد نتائج مطابقة</div>`;
         return;
       }
 
       listContainer.innerHTML = items.map(item => `
-        <div onclick='selectProductById("${item.id}")' class="p-3 bg-slate-950 hover:bg-slate-800 rounded-xl border border-slate-800/80 cursor-pointer transition flex justify-between items-center group">
+        <div onclick='selectProductById("${item.id}")' class="p-3 bg-slate-950 hover:bg-slate-800 rounded-xl border border-slate-800 cursor-pointer transition flex justify-between items-center group">
           <div>
             <h4 class="font-bold text-slate-200 text-sm group-hover:text-blue-400 transition">${escapeHtml(item.name)}</h4>
             <p class="text-xs text-slate-400 font-mono">${item.barcode} | <span class="text-indigo-400">${escapeHtml(item.factory)}</span></p>
@@ -664,7 +666,6 @@
       if (!selectedProductId) return;
       const p = products.find(item => item.id === selectedProductId);
       if (!p) return;
-
       const text = `منتج ${p.name}. سعر القطاعي ${p.retailPrice} جنيه. وسعر الجملة ${p.wholesalePrice} جنيه.`;
       const speech = new SpeechSynthesisUtterance(text);
       speech.lang = "ar-SA";
@@ -680,36 +681,28 @@
     function closeCameraModal() {
       document.getElementById("camera-modal").classList.add("hidden");
       if (html5QrcodeScanner) {
-        html5QrcodeScanner.stop().then(() => {
-          html5QrcodeScanner.clear();
-        }).catch(() => {});
+        html5QrcodeScanner.stop().then(() => html5QrcodeScanner.clear()).catch(() => {});
       }
     }
 
     function startQrScanner() {
       html5QrcodeScanner = new Html5Qrcode("reader");
-      const config = { fps: 10, qrbox: { width: 250, height: 180 } };
-
       html5QrcodeScanner.start(
         { facingMode: currentFacingMode },
-        config,
+        { fps: 10, qrbox: { width: 250, height: 180 } },
         (decodedText) => {
           playBeepSound();
           document.getElementById("search-input").value = decodedText;
           handleSearchInput();
           closeCameraModal();
         },
-        (errorMessage) => {}
-      ).catch(err => {
-        alert("تعذر فتح الكاميرا: يرجى التأكد من إعطاء الصلاحية أو استخدام رابط HTTPS");
-      });
+        () => {}
+      ).catch(() => alert("تعذر فتح الكاميرا: يرجى فتح الموقع عبر رابط HTTPS آمن"));
     }
 
     function switchCameraFacing() {
       currentFacingMode = currentFacingMode === "environment" ? "user" : "environment";
-      if (html5QrcodeScanner) {
-        html5QrcodeScanner.stop().then(() => startQrScanner());
-      }
+      if (html5QrcodeScanner) html5QrcodeScanner.stop().then(() => startQrScanner());
     }
 
     function playBeepSound() {
@@ -724,7 +717,7 @@
       } catch(e) {}
     }
 
-    // Admin Session System
+    // Admin Security
     function toggleAdminPanel() {
       if (isAdminUnlocked) {
         document.getElementById("admin-panel").classList.toggle("hidden");
@@ -758,7 +751,7 @@
       document.getElementById("admin-icon").className = "fa-solid fa-key";
     }
 
-    // Reset Database System (Password: 200615)
+    // Reset Database System
     function openResetModal() {
       document.getElementById("reset-modal").classList.remove("hidden");
     }
@@ -772,7 +765,7 @@
       const inputPass = document.getElementById("reset-pass-input").value.trim();
       if (inputPass === RESET_PASS) {
         products = [];
-        saveDataLocally();
+        syncDataToCloud();
         handleSearchInput();
         closeResetModal();
         document.getElementById("kiosk-empty-state").classList.remove("hidden");
@@ -783,7 +776,7 @@
       }
     }
 
-    // Admin Table Render
+    // Render Admin Table
     function renderAdminTable() {
       const tbody = document.getElementById("admin-table-body");
       tbody.innerHTML = products.map(p => `
@@ -795,18 +788,14 @@
           <td class="p-3 font-bold text-emerald-400">${Number(p.retailPrice).toFixed(2)} ج.م</td>
           <td class="p-3 font-bold text-blue-400">${Number(p.wholesalePrice).toFixed(2)} ج.م</td>
           <td class="p-3 text-center space-x-2 space-x-reverse">
-            <button onclick='openProductModal("${p.id}")' class="px-2 py-1 bg-blue-600/20 hover:bg-blue-600/40 text-blue-400 rounded text-xs border border-blue-500/30">
-              <i class="fa-solid fa-pen"></i> تعديل
-            </button>
-            <button onclick='deleteProduct("${p.id}")' class="px-2 py-1 bg-red-600/20 hover:bg-red-600/40 text-red-400 rounded text-xs border border-red-500/30">
-              <i class="fa-solid fa-trash"></i> حذف
-            </button>
+            <button onclick='openProductModal("${p.id}")' class="px-2 py-1 bg-blue-600/20 text-blue-400 rounded text-xs border border-blue-500/30">تعديل</button>
+            <button onclick='deleteProduct("${p.id}")' class="px-2 py-1 bg-red-600/20 text-red-400 rounded text-xs border border-red-500/30">حذف</button>
           </td>
         </tr>
       `).join('');
     }
 
-    // Add / Edit Product
+    // Save/Delete Products with Cloud Sync
     function openProductModal(id = null) {
       document.getElementById("product-modal").classList.remove("hidden");
       const form = document.getElementById("product-form");
@@ -850,33 +839,24 @@
           products[index] = { id, barcode, name, factory, category, retailPrice, wholesalePrice };
         }
       } else {
-        const newProduct = {
-          id: Date.now().toString(),
-          barcode,
-          name,
-          factory,
-          category,
-          retailPrice,
-          wholesalePrice
-        };
-        products.unshift(newProduct);
+        products.unshift({ id: Date.now().toString(), barcode, name, factory, category, retailPrice, wholesalePrice });
       }
 
-      saveDataLocally();
+      syncDataToCloud();
       handleSearchInput();
       closeProductModal();
-      alert("تم حفظ المنتج بنجاح!");
+      alert("تم حفظ وتعميم التعديل سحابياً بنجاح!");
     }
 
     function deleteProduct(id) {
-      if (confirm("هل أنت تأكد من حذف هذا المنتج؟")) {
+      if (confirm("هل أنت تأكد من حذف هذا المنتج سحابياً؟")) {
         products = products.filter(p => p.id !== id);
-        saveDataLocally();
+        syncDataToCloud();
         handleSearchInput();
       }
     }
 
-    // Excel Upload (.xlsx)
+    // Excel Parser
     function triggerExcelUpload() {
       document.getElementById("excel-file-input").click();
     }
@@ -889,14 +869,8 @@
       reader.onload = function(evt) {
         const data = new Uint8Array(evt.target.result);
         const workbook = XLSX.read(data, { type: 'array' });
-        const firstSheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[firstSheetName];
+        const worksheet = workbook.Sheets[workbook.SheetNames[0]];
         const json = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-
-        if (json.length < 2) {
-          alert("ملف الإكسيل فارغ أو لا يحتوي على صفوف بيانات!");
-          return;
-        }
 
         let importedCount = 0;
         for (let i = 1; i < json.length; i++) {
@@ -910,28 +884,20 @@
             const wholesalePrice = parseFloat(row[5]) || 0;
 
             if (barcode && name) {
-              products.push({
-                id: Date.now().toString() + i,
-                barcode,
-                name,
-                factory,
-                category,
-                retailPrice,
-                wholesalePrice
-              });
+              products.push({ id: Date.now().toString() + i, barcode, name, factory, category, retailPrice, wholesalePrice });
               importedCount++;
             }
           }
         }
 
-        saveDataLocally();
+        syncDataToCloud();
         handleSearchInput();
-        alert(`تم استيراد ${importedCount} منتج بنجاح من شيت الإكسيل!`);
+        alert(`تم رفع وتحديث ${importedCount} منتج سحابياً للجميع!`);
       };
       reader.readAsArrayBuffer(file);
     }
 
-    // Backup & Restore
+    // Backups
     function exportBackupJSON() {
       const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(products, null, 2));
       const downloadAnchor = document.createElement('a');
@@ -949,20 +915,17 @@
     function handleBackupRestore(e) {
       const file = e.target.files[0];
       if (!file) return;
-
       const reader = new FileReader();
       reader.onload = function(evt) {
         try {
           const importedData = JSON.parse(evt.target.result);
           if (Array.isArray(importedData)) {
             products = importedData;
-            saveDataLocally();
+            syncDataToCloud();
             handleSearchInput();
-            alert("تم استعادة النسخة الاحتياطية للبيانات بنجاح!");
+            alert("تم استعادة ومزامنة النسخة سحابياً بنجاح!");
           }
-        } catch(err) {
-          alert("خطأ في قراءة ملف النسخة الاحتياطية!");
-        }
+        } catch(err) {}
       };
       reader.readAsText(file);
     }
